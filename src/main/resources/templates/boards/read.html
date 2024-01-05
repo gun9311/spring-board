@@ -82,7 +82,7 @@
   <li th:each="comment : ${comments}" th:text="${comment.content}"></li>
 </ul>
 <a th:href="@{|/boards/paging?page=${page}|}" class="button">목록</a>
-<a th:href="@{|/boards/update${board.id}|}" class="button">수정</a>
+<a th:href="@{|/boards/update${board.id}|(page=${page})}" class="button">수정</a>
 <a th:href="@{|/boards/delete${board.id}|}" class="button">삭제</a>
 </body>
 </html>

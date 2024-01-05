@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>게시물 수정</h2>
-<form action="/boards/update" method="post" name="updateForm">
+<form th:action="@{|/boards/update${boardUpdate.id}|(page=${page})}" method="post" name="updateForm">
   <input type="hidden" name="id" th:value="${boardUpdate.id}">
   <label for="title">제목:</label>
   <input type="text" id="title" name="boardTitle" th:value="${boardUpdate.boardTitle}">

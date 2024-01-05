@@ -29,7 +29,7 @@ public class BoardController {
     public String saveForm(@ModelAttribute BoardDTO boardDTO) {
 //      System.out.println("board =" + boardDTO);
         boardService.save(boardDTO);
-        return  "redirect:/boards/list";
+        return  "redirect:/boards/paging";
     }
 
     @GetMapping ("/list")
@@ -52,31 +52,33 @@ public class BoardController {
     }
 
     @GetMapping("/update{id}")
-    public  String updateForm(@PathVariable("id") Long id, Model model) {
+    public  String updateForm(@PathVariable("id") Long id, Model model, @PageableDefault(page = 1) Pageable pageable) {
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("boardUpdate", boardDTO);
+        model.addAttribute("page", pageable.getPageNumber());
         return "boards/update";
 
     }
 
-    @PostMapping("/update")
-    public  String update(@ModelAttribute BoardDTO boardDTO, Model model) {
+    @PostMapping("/update{id}")
+    public  String update(@ModelAttribute BoardDTO boardDTO, Model model, @PageableDefault(page = 1) Pageable pageable) {
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
+        model.addAttribute("page", pageable.getPageNumber());
         return "boards/read";
     }
 
     @GetMapping("/delete{id}")
     public  String delete(@PathVariable("id") Long id, Model model) {
         boardService.delete(id);
-        return "redirect:/boards/list";
+        return "redirect:/boards/paging";
     }
 
     @GetMapping("/paging")
     public  String paging(@PageableDefault(page=1) Pageable pageable, Model model) {
 //        pageable.getPageNumber();
         Page<BoardDTO> boardList = boardService.paging(pageable);
-        int blockLimit = 3;
+        int blockLimit = 5;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/ blockLimit)))-1) * blockLimit +1;
         int endPage = ((startPage + blockLimit -1) < boardList.getTotalPages()) ? startPage + blockLimit -1 : boardList.getTotalPages();
         // page 개수가 20개

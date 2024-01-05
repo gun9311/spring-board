@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<body>
+<h1>게시판</h1>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/boards/create}">게시물 작성</a></li>
+        <li><a th:href="@{/boards/list}">게시물 목록</a></li>
+        <li><a th:href="@{/users/register}">회원가입</a></li>
+        <li><a th:href="@{/users/login}">로그인</a></li>
+    </ul>
+</nav>
+
+<div>
+    <!-- 본문 내용 -->
+    <p>게시판에 오신 것을 환영합니다!</p>
+</div>
+</body>
+</html>

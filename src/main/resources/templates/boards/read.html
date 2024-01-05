@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${board.boardTitle}"></title>
+</head>
+<body>
+<h2 th:text="${board.boardTitle}"></h2>
+<p th:text="${board.boardContent}"></p>
+
+<h3>댓글</h3>
+<form action="/comments/create" method="post">
+  <label for="comment">댓글 작성:</label>
+  <textarea id="comment" name="comment" required></textarea>
+  <button type="submit">작성</button>
+</form>
+
+<ul>
+  <!-- 댓글 목록을 동적으로 표시 -->
+  <li th:each="comment : ${comments}" th:text="${comment.content}"></li>
+</ul>
+</body>
+</html>

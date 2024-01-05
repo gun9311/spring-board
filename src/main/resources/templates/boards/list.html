@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시물 목록</title>
+</head>
+<body>
+<h2>게시물 목록</h2>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>제목</th>
+    <th>작성자</th>
+    <th>날짜</th>
+    <th>조회수</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- 게시물 목록을 동적으로 표시 -->
+  <tr th:each="board : ${boardList}">
+    <td th:text="${board.id}"></td>
+<!--    <a th:href="@{|/boards/read${board.id}|}"><td th:text="${board.boardTitle}"></td></a>-->
+    <td><a th:href="@{|/boards/read${board.id}|}" th:text="${board.boardTitle}" ></a></td>
+    <td th:text="${board.boardWriter}"></td>
+    <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    <td th:text="${board.boardHits}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

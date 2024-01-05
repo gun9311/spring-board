@@ -38,5 +38,16 @@ public class Board extends BaseEntity{
         return  boardEntity;
     }
 
+    public static Board toUpdateEntity(BoardDTO boardDTO) {
+        Board boardEntity = new Board();
+        boardEntity.setId(boardDTO.getId());
+        boardEntity.setBoardContent(boardDTO.getBoardContent());
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardHits(boardDTO.getBoardHits());
+        boardEntity.setCreatedTime(boardDTO.getBoardCreatedTime());
+        return  boardEntity;
+    }
+
     // Getter, Setter, Constructor 등 필요한 메서드 추가
 }

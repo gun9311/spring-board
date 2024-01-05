@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 목록 - 페이징</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #007BFF;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #CED4DA;
+            padding: 10px;
+            text-align: left;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .pagination {
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #007BFF;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+        }
+
+        .pagination a:hover {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        .pagination .active {
+            background-color: #007BFF;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<h2>게시물 목록 - 페이징</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>날짜</th>
+        <th>조회수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 게시물 목록을 동적으로 표시 -->
+    <tr th:each="board : ${boardList}">
+        <td th:text="${board.id}"></td>
+        <td><a th:href="@{|/boards/read${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}" ></a></td>
+        <td th:text="${board.boardWriter}"></td>
+        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${board.boardHits}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- 페이징 처리 -->
+<div class="pagination">
+    <span th:if="${startPage > 1}">
+        <a th:href="@{|/boards/paging?page=1|}">처음</a>
+    </span>
+    <span th:if="${startPage > 1}">
+        <a th:href="@{|/boards/paging?page=${startPage - 1}|}">&laquo; 이전</a>
+    </span>
+    <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+        <a th:href="@{|/boards/paging?page=${pageNum}|}" th:class="${pageNum} == ${boardList.number + 1} ? 'active'">[[${pageNum}]]</a>
+    </span>
+    <span th:if="${endPage < boardList.totalPages}">
+        <a th:href="@{|/boards/paging?page=${endPage + 1}|}">다음 &raquo;</a>
+    </span>
+    <span th:if="${endPage < boardList.totalPages}">
+        <a th:href="@{|/boards/paging?page=${boardList.totalPages}|}">마지막</a>
+    </span>
+</div>
+</body>
+</html>

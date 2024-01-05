@@ -39,7 +39,7 @@ public class BoardController {
 
     // test
     @GetMapping ("/read{id}")
-    public String findById(@PathVariable Long id, Model model)
+    public String findById(@PathVariable("id") Long id, Model model)
     {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);

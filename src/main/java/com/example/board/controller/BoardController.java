@@ -37,6 +37,7 @@ public class BoardController {
         return  "boards/list";
     }
 
+    // test
     @GetMapping ("/read{id}")
     public String findById(@PathVariable Long id, Model model)
     {

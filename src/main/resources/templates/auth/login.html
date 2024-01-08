@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form id="loginForm">
+  <label for="email">E-mail:</label>
+  <input type="text" id="email" name="email" required>
+  <br>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required>
+  <br>
+
+  <button type="button" onclick="login()">Login</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function login() {
+        var formData = {
+            email: $('#email').val(),
+            password: $('#password').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/auth/login',
+            data: JSON.stringify(formData),
+            success: function(data) {
+                console.log('Login successful:', data);
+<!--                localStorage.setItem('accessToken', data.accessToken);-->
+<!--                localStorage.setItem('refreshToken', data.refreshToken);-->
+                document.cookie = 'accessToken=' + data.accessToken + '; path=/';
+                document.cookie = 'refreshToken=' + data.refreshToken + '; path=/';
+                window.location.href = '/';
+
+                // 로그인 성공 시 추가 동작을 수행하거나 홈 페이지로 리다이렉트 등
+            },
+            error: function(error) {
+                console.error('Error during login:', error);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

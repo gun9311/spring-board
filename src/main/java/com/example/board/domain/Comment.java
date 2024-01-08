@@ -18,7 +18,7 @@ public class Comment {
     private Board board;
 
     @ManyToOne
-    private User author;
+    private Member author;
 
     // Getter, Setter, Constructor 등 필요한 메서드 추가
 }

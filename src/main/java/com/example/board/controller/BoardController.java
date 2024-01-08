@@ -65,7 +65,7 @@ public class BoardController {
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
         model.addAttribute("page", pageable.getPageNumber());
-        return "boards/read";
+        return "redirect:/boards/read{id}?page=" + pageable.getPageNumber();
     }
 
     @GetMapping("/delete{id}")

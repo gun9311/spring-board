@@ -9,9 +9,10 @@
 
 <nav>
     <ul>
-        <li><a th:href="@{/boards/create}">게시물 작성</a></li>
         <li><a th:href="@{/auth/signup}">회원가입</a></li>
         <li><a th:href="@{/auth/login}">로그인</a></li>
+        <li><a href="#" onclick="logout()">로그아웃</a></li>
+        <li><a th:href="@{/boards/create}">게시물 작성</a></li>
         <li><a th:href="@{/boards/paging}">게시물 보기</a></li>
     </ul>
 </nav>
@@ -21,6 +22,14 @@
     <p>게시판에 오신 것을 환영합니다!</p>
 </div>
 
+<script>
+    function logout() {
+        // accessToken 쿠키 삭제
+        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        // 추가적으로 다른 로그아웃 관련 동작 수행 가능
+        window.location.href = '/auth/login';
+    }
+</script>
 
 </body>
 </html>

@@ -3,6 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>게시판</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: #343a40;
+            overflow: hidden;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #007bff;
+        }
+
+        div {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
 <h1>게시판</h1>
@@ -10,8 +54,8 @@
 <nav>
     <ul>
         <li><a th:href="@{/auth/signup}">회원가입</a></li>
-        <li><a th:href="@{/auth/login}">로그인</a></li>
-        <li><a href="#" onclick="logout()">로그아웃</a></li>
+        <li id="loginNav"><a th:href="@{/auth/login}">로그인</a></li>
+        <li id="logoutNav"><a href="#" onclick="logout()">로그아웃</a></li>
         <li><a th:href="@{/boards/create}">게시물 작성</a></li>
         <li><a th:href="@{/boards/paging}">게시물 보기</a></li>
     </ul>
@@ -23,11 +67,30 @@
 </div>
 
 <script>
+    // 쿠키에서 AccessToken 가져오기
+    var accessToken = getCookie('accessToken');
+
+    // 로그인 상태에 따라 네비게이션 바 설정
+    if (accessToken) {
+        document.getElementById('loginNav').style.display = 'none';
+        document.getElementById('logoutNav').style.display = 'block';
+    } else {
+        document.getElementById('loginNav').style.display = 'block';
+        document.getElementById('logoutNav').style.display = 'none';
+    }
+
     function logout() {
-        // accessToken 쿠키 삭제
+        // AccessToken 쿠키 삭제
         document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         // 추가적으로 다른 로그아웃 관련 동작 수행 가능
         window.location.href = '/auth/login';
+    }
+
+    // 쿠키에서 특정 이름의 쿠키 값을 가져오는 함수
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
     }
 </script>
 

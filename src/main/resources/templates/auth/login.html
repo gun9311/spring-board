@@ -5,24 +5,37 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
-<body>
+<body class="bg-light">
 
-<h2>Login</h2>
-
-<form id="loginForm">
-  <label for="email">E-mail:</label>
-  <input type="text" id="email" name="email" required>
-  <br>
-
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required>
-  <br>
-
-  <button type="button" onclick="login()">Login</button>
-</form>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h2 class="text-center">Login</h2>
+        </div>
+        <div class="card-body">
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="email">E-mail:</label>
+              <input type="text" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" onclick="login()">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
     function login() {
         var formData = {
@@ -37,8 +50,6 @@
             data: JSON.stringify(formData),
             success: function(data) {
                 console.log('Login successful:', data);
-<!--                localStorage.setItem('accessToken', data.accessToken);-->
-<!--                localStorage.setItem('refreshToken', data.refreshToken);-->
                 document.cookie = 'accessToken=' + data.accessToken + '; path=/';
                 document.cookie = 'refreshToken=' + data.refreshToken + '; path=/';
                 window.location.href = '/';

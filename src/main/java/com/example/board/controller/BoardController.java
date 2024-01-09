@@ -1,11 +1,16 @@
 package com.example.board.controller;
 
+import com.example.board.domain.Member;
 import com.example.board.dto.BoardDTO;
+import com.example.board.dto.MemberResponseDto;
 import com.example.board.service.BoardService;
+import com.example.board.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +23,17 @@ import java.util.List;
 public class BoardController {
 
     private  final BoardService boardService;
+    private  final MemberService memberService;
 
     @GetMapping ("/create")
-    public String createForm() {
+    public String createForm(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            String loggedInUserEmail = authentication.getName();
+            MemberResponseDto loggedInUser = memberService.findMemberInfoById(Long.valueOf(loggedInUserEmail));
+            model.addAttribute("loggedInUserEmail", loggedInUser.getEmail());
+        }
 
         return  "boards/create";
     }
